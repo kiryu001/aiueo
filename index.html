@@ -1,10 +1,46 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
 <script src="http://cdn.mlkcca.com/v0.2.8/milkcocoa.js"></script>
 <script src="http://code.jquery.com/jquery-2.1.0.js"></script>
+<script src="jquery-ui.js"></script>
+<style>
+.back {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 100%;
+	height: 100%;	
+}
+.content {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+}
+.kobito-content {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+}
+.kobito {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+}
+.flame {
+	width : 560px;
+	height : 315px;
+}
+</style>
+</head>
+<body>
 <div>
 	<img id="logo" src="images/aiueo_logo.png"></img>
 </div>
-<div id="kobito">
-    <img width="120" src="images/kobito.gif"></img>
-</div>
-<div id="content"></div>
+<div id="kobito-content" class="kobito-content"></div>
+<div id="back" class="back"></div>
+<div id="content" class="content"></div>
 <script src="main.js"></script>
+</body>
+</html>

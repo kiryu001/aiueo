@@ -1,13 +1,24 @@
-(function(){
+$(function(){
     setTimeout(function() {
         $("#logo").hide();
         start()
     }, 1200);
-    function start() {
     var milkcocoa = new MilkCocoa("https://io-li1eaqdxg.mlkcca.com");
     var hash = escapeHTML(location.hash.substr(1));
     var dataStore = milkcocoa.dataStore("kobito").child(hash);
-    $("#kobito").offset({left : 0, top :0});
+    var flameDataStore = dataStore.child("flame");
+	    function escapeHTML(val) {
+	        return $('<div>').text(val).html();
+	    };
+    function start() {
+        $("#kobito-content").offset({
+            left : 0,
+            top : 0
+        })
+        $("#content").offset({
+            left : 0,
+            top : 0
+        })
     var url = "images/aiueo_";
     var aiueo_map = {
         "あ" : 1,
@@ -62,7 +73,7 @@ function AiueoElement(_x, _y, _text) {
     var x = _x;
     var y = _y;
     var text = _text;
-    var id = new Date().getTime(36);
+    var id = new Date().getTime().toString(36)
     $("#content").append('<div id="c'+id+'"></div>');
     $("#c" + id).html(get_aiueo(text));
     $("#c" + id).offset({left : x, top :y});
@@ -71,21 +82,21 @@ function AiueoElement(_x, _y, _text) {
 function set_element(x, y, text) {
     var tx = Number(x)-60;
     var ty = Number(y)-60;
-    $("#kobito").offset({
-        left : -100,
-        top : 0
-    });
-    $("#kobito").animate({
+    var id = new Date().getTime().toString(36)
+    $("#kobito-content").append('<div id="kobito'+id+'" class="kobito"><img width="120" src="images/kobito.gif"></img></div>');
+    $("#kobito"+id).offset({left : -100, top :0});
+    $("#kobito"+id).animate({
         left : tx,
         top : ty
-    }, 1000);
-    setTimeout(function() {
+    }, 1000, function() {
         var ae = new AiueoElement(tx, ty, text);
-        $("#kobito").animate({
+        $("#kobito"+id).animate({
             left : -95,
             top : 0
-        }, 1000);
-    }, 1000);
+        }, 1000, function(){
+            $("#kobito"+id).remove();
+        });
+    });
 }
 
 function get_aiueo(text) {
@@ -99,13 +110,15 @@ function get_aiueo(text) {
     }).join("");
 }
 
-$(window).mousedown(function(e){
-    var text = window.prompt("なにをかきますか？")
-    dataStore.push({
-        x : e.pageX,
-        y : e.pageY,
-        text : text
-    });
+$("#content").mousedown(function(e){
+    var text = window.prompt("なにをかきますか？");
+    if(text) {
+        dataStore.push({
+            x : e.pageX,
+            y : e.pageY,
+            text : text
+        });
+    } 
 });
 
 dataStore.query({}).done(function(elems) {
@@ -118,8 +131,34 @@ dataStore.on("push", function(e){
     set_element(e.value.x, e.value.y, e.value.text);
 });
 
-    function escapeHTML(val) {
-        return $('<div>').text(val).html();
-    };    }
 
-}())
+	}
+
+	function FlameElement(_x, _y) {
+	    var x = _x;
+	    var y = _y;
+	    var id = new Date().getTime().toString(36);
+	    $("#content").append('<div id="f'+id+'" class="flame"><img width="120" src="aiueo_fram.png"></img><button>動画</button></div>');
+	    $("#f" + id + " button").click(function() {
+	    	var youtube = window.prompt("動画のIDを書いてください。");
+            if(youtube) flameDataStore.set("set", {youtube : youtube});
+	    });
+	    var pos = {x:0, y:0};
+    	$("#f"+id).offset({
+    		top : y,
+    		left : x,
+    	});
+        flameDataStore.on("set", function(e) {
+        	if(e.id == "set") {
+			    $("#f" + id).html('<iframe width="560" height="315" src="//www.youtube.com/embed/'+e.value.youtube+'" frameborder="0" allowfullscreen></iframe>');
+        	}else if(e.id == "move") {
+	        	$("#f"+id).offset({
+	        		top : e.value.x,
+	        		left : e.value.y,
+	        	});
+        	}
+
+        });
+	}
+	new FlameElement(document.body.clientWidth / 2-50, document.body.clientHeight / 2-50);
+});
