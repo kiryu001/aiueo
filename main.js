@@ -138,7 +138,7 @@ dataStore.on("push", function(e){
 	    var x = _x;
 	    var y = _y;
 	    var id = new Date().getTime().toString(36);
-	    $("#content").append('<div id="f'+id+'" class="flame"><img width="120" src="aiueo_fram.png"></img><button>動画</button></div>');
+	    $("#content").append('<div id="f'+id+'" class="flame"><img width="120" src="images/aiueo_fram.png"></img><button>動画</button></div>');
 	    $("#f" + id + " button").click(function() {
 	    	var youtube = window.prompt("動画のIDを書いてください。");
             if(youtube) flameDataStore.set("set", {youtube : youtube});
