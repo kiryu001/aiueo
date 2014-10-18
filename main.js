@@ -1,7 +1,9 @@
 $(function(){
+    $("#wrapper").hide();
     setTimeout(function() {
+        $("#wrapper").show();
         $("#logo").hide();
-        start()
+        start();
     }, 1200);
     var milkcocoa = new MilkCocoa("https://io-li1eaqdxg.mlkcca.com");
     var hash = escapeHTML(location.hash.substr(1));
@@ -12,10 +14,6 @@ $(function(){
 	    };
     function start() {
         $("#kobito-content").offset({
-            left : 0,
-            top : 0
-        })
-        $("#content").offset({
             left : 0,
             top : 0
         })
@@ -77,6 +75,9 @@ function AiueoElement(_x, _y, _text) {
     $("#content").append('<div id="c'+id+'"></div>');
     $("#c" + id).html(get_aiueo(text));
     $("#c" + id).offset({left : x, top :y});
+    $("#content").width("100%");
+    $("#content").height("100%");
+
 }
 
 function set_element(x, y, text) {
@@ -160,5 +161,5 @@ dataStore.on("push", function(e){
 
         });
 	}
-	new FlameElement(document.body.clientWidth / 2-50, document.body.clientHeight / 2-50);
+	//new FlameElement(document.body.clientWidth / 2-50, document.body.clientHeight / 2-50);
 });

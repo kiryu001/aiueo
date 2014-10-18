@@ -7,16 +7,22 @@
 <script src="jquery-ui.js"></script>
 <style>
 .back {
-	position: absolute;
-	top: 0px;
-	left: 0px;
-	width: 100%;
-	height: 100%;	
+    z-index: 1;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
 }
 .content {
-	position: absolute;
-	top: 0px;
-	left: 0px;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
 }
 .kobito-content {
 	position: absolute;
@@ -29,18 +35,38 @@
 	left: 0px;
 }
 .flame {
+	position: absolute;
+	top: 32px;
+	left: 58px;
 	width : 560px;
 	height : 315px;
+}
+.flame_img {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width : 658px;
+	height : 376px;
+}
+.logo{
+    z-index: 100;	
 }
 </style>
 </head>
 <body>
-<div>
-	<img id="logo" src="images/aiueo_logo.png"></img>
-</div>
+
+<img class="flame_img" width="120" src="images/youtube.jpg">
+</img>
+
+<div id="wrapper">
 <div id="kobito-content" class="kobito-content"></div>
-<div id="back" class="back"></div>
 <div id="content" class="content"></div>
+</div>
+
+<div>
+	<img id="logo" class="logo" src="images/aiueo_logo.png"></img>
+</div>
+
 <script src="main.js"></script>
 </body>
 </html>
